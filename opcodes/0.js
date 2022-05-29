@@ -7,7 +7,7 @@ module.exports = class Dispatch extends Opcode {
 
     code = 0;
 
-    _receive(ws, data){
+    _receive(ws, data) {
         Log.ingress_dispatch(data.op, this, data.t);
         this.receive(ws, data.d, data.t);
     }
@@ -18,9 +18,7 @@ module.exports = class Dispatch extends Opcode {
      * @param data { heartbeat_interval: number }
      * @param event
      */
-    receive(ws, data, event){
-
-
+    receive(ws, data, event) {
         fetch(`${process.env['API_ENDPOINT']}`, {
             method: 'POST',
             headers: {
@@ -28,7 +26,7 @@ module.exports = class Dispatch extends Opcode {
                 'x-discord-event': event
             },
             body: JSON.stringify(data)
-            })
+        })
             .then((response) => {
                 // Do something with response
             })

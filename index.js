@@ -10,7 +10,7 @@ console.log(path.join(__dirname, 'opcodes'));
 const opcode_modules = FileSystem.readdirSync(path.join(__dirname, 'opcodes'));
 
 const opcodes = {};
-for(const opcode_module of opcode_modules){
+for (const opcode_module of opcode_modules) {
     let opcode_class = require(path.join(__dirname, 'opcodes', opcode_module))
     let opcode_instance = new opcode_class();
     opcodes[opcode_instance.code] = opcode_instance;
@@ -19,19 +19,19 @@ for(const opcode_module of opcode_modules){
 const ws = new WebSocket("wss://gateway.discord.gg?v=9&encoding=json");
 ws.opcodes = opcodes;
 
-ws.on('open', function(){
+ws.on('open', function () {
     console.log('Websocket connection opened');
 });
 
-ws.on('message', function(raw_data){
+ws.on('message', function (raw_data) {
 
     const data = JSON.parse(raw_data);
 
-    if(opcodes[data.op]){
+    if (opcodes[data.op]) {
         const opcode_instance = opcodes[data.op];
         opcode_instance._receive(ws, data);
 
-    }else{
+    } else {
         console.log(data);
         Log.no_responder(data.op);
     }

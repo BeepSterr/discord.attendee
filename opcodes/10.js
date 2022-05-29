@@ -10,7 +10,7 @@ module.exports = class Hello extends Opcode {
      * @param ws
      * @param data { heartbeat_interval: number }
      */
-    receive(ws, data){
+    receive(ws, data) {
 
         this.#interval = setInterval(() => {
             this.send(ws, Opcode.HEARTBEAT, null)
